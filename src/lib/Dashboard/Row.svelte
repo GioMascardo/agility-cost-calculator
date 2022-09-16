@@ -1,5 +1,6 @@
 <script>
   export let entry;
+  export let id;
 
   import {
     Menu,
@@ -13,9 +14,7 @@
   
   let experienceLevelOptions = ['Junior', 'Intermediate', 'Senior'];
   let selectedExperienceLevel = experienceLevelOptions[0]
-  
-  
-  const id = entry[2].id;
+
   $: roleData = entry.find(object => object.workOption === $selectedWorkOption)
   $: selectedRole = roleData.roles.find(role => role.experienceLevel === selectedExperienceLevel)
   $: ({ role, currencies } = selectedRole);
@@ -29,7 +28,7 @@
   $: yourSavings = currentCurrencyArr[2] * numberOfEmployees;
   
   const dispatch = createEventDispatcher();
-  function deleteHandler() {
+  function deleteHandler(id) {
     dispatch('delete', id)
   }
 </script>
@@ -50,7 +49,7 @@
   <td class="hire-with-agility"><span><sup>{$currentCurrency}</sup> {hireWithAgility}</span></td>
   <td class="hire-onshore"><span><sup>{$currentCurrency}</sup> {hireOnshore}</span></td>
   <td class="your-savings"><span><sup>{$currentCurrency}</sup> {yourSavings}</span></td>
-  <td><button on:click={deleteHandler}>delete</button></td>
+  <td><button on:click={() => deleteHandler(id)}>delete</button></td>
 </tr>
 
 

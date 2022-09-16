@@ -19,6 +19,7 @@
     let departmentRecord = departmentsList.find(findDepartment => findDepartment.departmentName === department.departmentName);
     selectedDepartment = departmentRecord.departmentName;
     departmentRoles = departmentRecord.departmentRoles;
+    selectedRole = ''
   }
 
   const dispatch = createEventDispatcher();

@@ -10,10 +10,15 @@
     newEntry = await fetchRoleList(event.detail.role);
     let uuid = uuidv4();
     newEntry = [...newEntry, {id: uuid}]
+    console.log(newEntry);
     entryList = [...entryList, newEntry];
   }
 
+  // newEntry = [[{...}, {...}, {id: ...}]]
+  // entry = [{...}, {...}, {id: ...}]
+
   $: deleteDispatchHandler = (event) => {
+    console.log('deleted ID', event.detail)
     entryList = entryList.filter(entry => entry[2].id !== event.detail);
     console.log(entryList);
   }

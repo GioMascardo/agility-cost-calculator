@@ -17,8 +17,8 @@
       <th><h3>Your Savings</h3></th>
       <th></th>
     </tr>
-    {#each entryList as entry}
-      <Row {entry} on:delete/>
+    {#each entryList as entry (entry[2].id)}
+      <Row {entry} id={entry[2].id} on:delete/>
     {/each}
   </table>
 {/if}
