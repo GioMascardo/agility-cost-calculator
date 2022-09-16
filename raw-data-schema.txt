@@ -1,0 +1,24 @@
+Raw Data Schema
+
+{
+    'Hire Onshore USD': 6100,
+    'Experience Level': 'Senior',
+    'Hire With Agility USD': 2490,
+    Departments: 'Design',
+    Role: 'Office Senior Graphic Designer/3D Artist',
+    Roles: 'Graphic Designer/3D Artist',
+    'Work Option': 'Office',
+    'Your Savings USD': 3610,
+    'Hire With Agility CAD': 3237,
+    'Hire Onshore CAD': 7930,
+    'Your Savings CAD': 4693,
+    'Hire With Agility AUD': 3635.4,
+    'Hire Onshore AUD': 8906,
+    'Your Savings AUD': 5270.6,
+    'Hire With Agility GBP': 2141.4,
+    'Hire Onshore GBP': 5246,
+    'Your Savings GBP': 3104.6,
+    'Hire With Agility SGD': 3486,
+    'Hire Onshore SGD': 8540,
+    'Your Savings SGD': 5054
+  }
