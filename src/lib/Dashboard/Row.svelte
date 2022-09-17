@@ -8,22 +8,14 @@
     MenuItems,
     MenuItem,
   } from "@rgossiaux/svelte-headlessui";
-  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from "svelte";
-  import { isWorkFromHome, selectedWorkOption, currentCurrency, estimateObjectArr } from '../../stores';
+  import { createEventDispatcher, onDestroy } from "svelte";
+  import { loop_guard } from "svelte/internal";
+  import { isWorkFromHome, selectedWorkOption, currentCurrency, estimateObjectArr, dashboardSummary } from '../../stores';
   import Counter from "../Counter.svelte";
   const dispatch = createEventDispatcher();
   
-  let experienceLevelOptions = ['Junior', 'Intermediate', 'Senior'];
+  const experienceLevelOptions = ['Junior', 'Intermediate', 'Senior'];
   $: selectedExperienceLevel = experienceLevelOptions[0]
-
-  // $: roleData = entry.find(object => object.workOption === $selectedWorkOption)
-  // $: selectedRole = roleData.roles.find(role => role.experienceLevel === selectedExperienceLevel)
-  // $: ({ role, currencies } = selectedRole);
-  // $: numberOfEmployees = 1;
-  // $: currentCurrencyArr = currencies[`${$currentCurrency}`];
-  // $: hireWithAgility = currentCurrencyArr[0] * numberOfEmployees;
-  // $: hireOnshore = currentCurrencyArr[1] * numberOfEmployees;
-  // $: yourSavings = currentCurrencyArr[2] * numberOfEmployees;
 
   $: roleData = entry.find(object => object.workOption === $selectedWorkOption)
   $: selectedRole = roleData.roles.find(role => role.experienceLevel === selectedExperienceLevel)
@@ -33,16 +25,24 @@
   $: hireWithAgility = currentCurrencyArr[0] * numberOfEmployees;
   $: hireOnshore = currentCurrencyArr[1] * numberOfEmployees;
   $: yourSavings = currentCurrencyArr[2] * numberOfEmployees;
-  // $: selectedRowData = {
-  //   id: id,
-  //   role: role, 
-  //   staffRequired: numberOfEmployees,
-  //   experienceLevel: selectedExperienceLevel,
-  //   hireWithAgility: hireWithAgility,
-  //   hireOnshore: hireOnshore,
-  //   yourSavings: yourSavings
-  // }
-  // TODO Research Svelte Context API
+
+  $: selectedRowData = {
+    id: id,
+    role: role, 
+    staffRequired: numberOfEmployees,
+    experienceLevel: selectedExperienceLevel,
+    hireWithAgility: hireWithAgility,
+    hireOnshore: hireOnshore,
+    yourSavings: yourSavings
+  }
+
+  $: if($dashboardSummary.every(i => i.id !== id)) {
+    $dashboardSummary = [...$dashboardSummary, selectedRowData];
+    console.log($dashboardSummary, `created row's summary in dashboardsummaryarr`);
+  }
+  let dashBoardObject = $dashboardSummary.find(object => object.id === id);
+  let dashBoardSummaryIndex = $dashboardSummary.indexOf(dashBoardObject);
+  $: $dashboardSummary[dashBoardSummaryIndex] = selectedRowData;
 
   function deleteHandler(id) {
     dispatch('delete', id)
@@ -51,7 +51,7 @@
   $: countChange = (event) => {
     numberOfEmployees = event.detail.count;
   }
-  // let rowObject = {id: id, estimate: 0}
+
   let estimateObject = {id: id, estimate: 0}
   $estimateObjectArr = [...$estimateObjectArr, estimateObject];
 
@@ -62,7 +62,9 @@
   }
 
   onDestroy(() => {
-    $estimateObjectArr = $estimateObjectArr.filter(object => object.id !== id)
+    $estimateObjectArr = $estimateObjectArr.filter(object => object.id !== id);
+    $dashboardSummary = $dashboardSummary.filter(object => object.id !== id);
+    console.log($dashboardSummary, `deleted ${role} from $dashboardSummary`);
   })
 </script>
 
@@ -84,7 +86,6 @@
   <td class="your-savings"><span><sup>{$currentCurrency}</sup> {yourSavings}</span></td>
   <td><button on:click={() => deleteHandler(id)}>delete</button></td>
 </tr>
-
 
 <style>
   td {

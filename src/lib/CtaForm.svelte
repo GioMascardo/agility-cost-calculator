@@ -1,8 +1,11 @@
 
   <script>
-  export let entryList;
   import { createEventDispatcher } from "svelte";
   import { createForm } from "svelte-forms-lib";
+  import { dashboardSummary } from '../stores';
+  import sgMail from '@sendgrid/mail'
+  sgMail.setApiKey(import.meta.env.SG_API_KEY);
+
   const dispatch = createEventDispatcher();
 
   const { form, handleChange, handleSubmit } = createForm({
@@ -13,9 +16,23 @@
       company: "",
       phone: '',
     },
-    onSubmit: values => {
-      let submitData = {formData: values, teamList: entryList };
-      dispatch('closeModal');
+    onSubmit: (values) => {
+      let msg = {
+        to: values.email,
+        from: 'mascardogio@gmail.com',
+        subject: 'Agility Cost Calculator Summary',
+        text: `Good day Mr./Ms. ${values.lastName}, here's a summary of your team using our cost calculator:
+          ${$dashboardSummary.forEach(row => {
+            let {role, staffRequired, experienceLevel, hireWithAgility, hireOnshore, yourSavings} = row;
+            return `- Role: ${role}, Number of ${role}${staffRequired > 1 ? 's': ''}: ${staffRequired}, Experience Level: ${experienceLevel}, Hire With Us: ${hireWithAgility}, Hire Onshore: ${hireOnshore}, Your Savings: ${yourSavings}`
+          })}`,
+      };
+      sgMail.send(msg).then(() => {
+        console.log('Email sent')
+      }).catch((error) => {
+        console.error(error)
+      })
+      dispatch('isDone');
     }
   });
 
@@ -53,7 +70,7 @@
       required
     />
 
-    <label for="company">Company</label>
+    <label for="company">Company (optional)</label>
     <input
       id="company"
       name="company"
