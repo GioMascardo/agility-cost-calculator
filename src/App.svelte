@@ -3,6 +3,8 @@
   import Dashboard from './lib/Dashboard.svelte';
   import fetchRoleList from "./lib/helper/fetchRolesList";
   import { v4 as uuidv4 } from 'uuid'
+  import Summary from './lib/Summary.svelte';
+  import EmptyState from './lib/EmptyState.svelte';
   
   $: entryList = [];
   $: addRoleHandler = async (event) => {
@@ -10,7 +12,6 @@
     newEntry = await fetchRoleList(event.detail.role);
     let uuid = uuidv4();
     newEntry = [...newEntry, {id: uuid}]
-    console.log(newEntry);
     entryList = [...entryList, newEntry];
   }
 
@@ -18,16 +19,19 @@
   // entry = [{...}, {...}, {id: ...}]
 
   $: deleteDispatchHandler = (event) => {
-    console.log('deleted ID', event.detail)
     entryList = entryList.filter(entry => entry[2].id !== event.detail);
-    console.log(entryList);
   }
+
 </script>
 
 <main class="calculator">
   <Actions on:addRole={addRoleHandler}/>
-  <Dashboard {entryList} on:delete={deleteDispatchHandler}/>
-
+  {#if entryList.length === 0}
+    <EmptyState on:addRole={addRoleHandler} />
+  {:else}
+    <Dashboard {entryList} on:delete={deleteDispatchHandler} />
+    <Summary />
+  {/if}
 </main>
 
 <style>

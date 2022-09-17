@@ -8,29 +8,54 @@
     MenuItems,
     MenuItem,
   } from "@rgossiaux/svelte-headlessui";
-  import { createEventDispatcher } from "svelte";
-  import { isWorkFromHome, selectedWorkOption, currentCurrency } from '../../stores';
+  import { createEventDispatcher, onMount, afterUpdate, onDestroy } from "svelte";
+  import { isWorkFromHome, selectedWorkOption, currentCurrency, estimateObjectArr } from '../../stores';
   import Counter from "../Counter.svelte";
+  const dispatch = createEventDispatcher();
   
   let experienceLevelOptions = ['Junior', 'Intermediate', 'Senior'];
-  let selectedExperienceLevel = experienceLevelOptions[0]
+  $: selectedExperienceLevel = experienceLevelOptions[0]
+
+  // $: roleData = entry.find(object => object.workOption === $selectedWorkOption)
+  // $: selectedRole = roleData.roles.find(role => role.experienceLevel === selectedExperienceLevel)
+  // $: ({ role, currencies } = selectedRole);
+  // $: numberOfEmployees = 1;
+  // $: currentCurrencyArr = currencies[`${$currentCurrency}`];
+  // $: hireWithAgility = currentCurrencyArr[0] * numberOfEmployees;
+  // $: hireOnshore = currentCurrencyArr[1] * numberOfEmployees;
+  // $: yourSavings = currentCurrencyArr[2] * numberOfEmployees;
 
   $: roleData = entry.find(object => object.workOption === $selectedWorkOption)
   $: selectedRole = roleData.roles.find(role => role.experienceLevel === selectedExperienceLevel)
   $: ({ role, currencies } = selectedRole);
-  $: numberOfEmployees = 1;
-  function countChange(event) {
-    numberOfEmployees = event.detail.count;
-  }
+  let numberOfEmployees = 1;
   $: currentCurrencyArr = currencies[`${$currentCurrency}`];
   $: hireWithAgility = currentCurrencyArr[0] * numberOfEmployees;
   $: hireOnshore = currentCurrencyArr[1] * numberOfEmployees;
   $: yourSavings = currentCurrencyArr[2] * numberOfEmployees;
-  
-  const dispatch = createEventDispatcher();
+
   function deleteHandler(id) {
     dispatch('delete', id)
   }
+
+  $: countChange = (event) => {
+    numberOfEmployees = event.detail.count;
+  }
+
+    let estimateObject = {id: id, estimate: 0}
+    $estimateObjectArr = [...$estimateObjectArr, estimateObject];
+
+  let rowObject = $estimateObjectArr.find(object => object.id === id);
+  let rowIndex = $estimateObjectArr.indexOf(rowObject);
+  $: {
+    $estimateObjectArr[rowIndex]['estimate'] = hireWithAgility;
+  }
+
+  onDestroy(() => {
+    $estimateObjectArr = $estimateObjectArr.filter(object => object.id !== id)
+    console.log(`removed ${role}'s object from estimateObjectArr`);
+    console.log($estimateObjectArr, `new estimateObjectArr`);
+  })
 </script>
 
 <tr>
