@@ -29,7 +29,7 @@
 
   $: deleteDispatchHandler = (event) => {
     entryList = entryList.filter(entry => entry[2].id !== event.detail);
-  }\
+  }
 
   let isModalOpen = false;
 </script>
