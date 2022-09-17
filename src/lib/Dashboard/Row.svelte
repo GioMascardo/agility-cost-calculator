@@ -33,6 +33,16 @@
   $: hireWithAgility = currentCurrencyArr[0] * numberOfEmployees;
   $: hireOnshore = currentCurrencyArr[1] * numberOfEmployees;
   $: yourSavings = currentCurrencyArr[2] * numberOfEmployees;
+  // $: selectedRowData = {
+  //   id: id,
+  //   role: role, 
+  //   staffRequired: numberOfEmployees,
+  //   experienceLevel: selectedExperienceLevel,
+  //   hireWithAgility: hireWithAgility,
+  //   hireOnshore: hireOnshore,
+  //   yourSavings: yourSavings
+  // }
+  // TODO Research Svelte Context API
 
   function deleteHandler(id) {
     dispatch('delete', id)
@@ -41,9 +51,9 @@
   $: countChange = (event) => {
     numberOfEmployees = event.detail.count;
   }
-
-    let estimateObject = {id: id, estimate: 0}
-    $estimateObjectArr = [...$estimateObjectArr, estimateObject];
+  // let rowObject = {id: id, estimate: 0}
+  let estimateObject = {id: id, estimate: 0}
+  $estimateObjectArr = [...$estimateObjectArr, estimateObject];
 
   let rowObject = $estimateObjectArr.find(object => object.id === id);
   let rowIndex = $estimateObjectArr.indexOf(rowObject);
@@ -53,8 +63,6 @@
 
   onDestroy(() => {
     $estimateObjectArr = $estimateObjectArr.filter(object => object.id !== id)
-    console.log(`removed ${role}'s object from estimateObjectArr`);
-    console.log($estimateObjectArr, `new estimateObjectArr`);
   })
 </script>
 

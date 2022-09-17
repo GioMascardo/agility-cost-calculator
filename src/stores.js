@@ -60,12 +60,10 @@ export let selectedWorkOption = derived(isWorkFromHome, ($isWorkFromHome) =>
 export let estimateObjectArr = writable([{ id: 0, estimate: 0 }]);
 export let totalEstimate = derived(estimateObjectArr, ($estimateObjectArr) => {
   let estimateArr = $estimateObjectArr.map((object) => object.estimate);
-  console.log("estimateArr", estimateArr);
   let total = estimateArr.reduce(
     (previousValue, currentValue) => previousValue + currentValue,
     0
   );
-  // estimateArr.forEach((estimate) => (total += estimate));
   return total;
 });
 
