@@ -7,7 +7,9 @@ const base = new Airtable({ apiKey: "keycC9XfHbK0Esewa" }).base(
 // export const mainTable = base("tbliwQjVfECiSHGAb");
 const departmentsTableID = "tblCKDpubPux5jjwS";
 
-const departmentsTable = await base(departmentsTableID).select().all();
+export const departmentsTable = await base(departmentsTableID)
+  .select()
+  .firstPage();
 console.log("API CALL");
 
 export const departmentsList = departmentsTable.map((record) => {

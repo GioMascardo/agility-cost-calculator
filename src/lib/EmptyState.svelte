@@ -10,14 +10,21 @@
 </div>
 
 <style>
+  h1 {
+    max-width: 32.5rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
   .empty-state-wrapper {
-    min-height: 684px;
+    min-height: 30rem;
     display: grid;
     place-items: center;
   }
 
   .content {
-    max-width: 520px;
+    max-width: 60rem;
+    margin-inline: auto;
     display: flex;
     flex-direction: column;
   }
