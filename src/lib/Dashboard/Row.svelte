@@ -22,9 +22,9 @@
   $: ({ role, currencies } = selectedRole);
   let numberOfEmployees = 1;
   $: currentCurrencyArr = currencies[`${$currentCurrency}`];
-  $: hireWithAgility = currentCurrencyArr[0] * numberOfEmployees;
-  $: hireOnshore = currentCurrencyArr[1] * numberOfEmployees;
-  $: yourSavings = currentCurrencyArr[2] * numberOfEmployees;
+  $: hireWithAgility = Math.floor(currentCurrencyArr[0] * numberOfEmployees);
+  $: hireOnshore = Math.floor(currentCurrencyArr[1] * numberOfEmployees);
+  $: yourSavings = Math.floor(currentCurrencyArr[2] * numberOfEmployees);
 
   $: selectedRowData = {
     id: id,
