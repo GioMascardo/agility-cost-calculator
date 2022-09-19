@@ -3,7 +3,7 @@ import Airtable from "airtable";
 import "dotenv/config";
 
 const base = new Airtable({
-  apiKey: process.env.AIRTABLE_API_KEY,
+  apiKey: import.meta.env.AIRTABLE_API_KEY,
 }).base("appH9R8fMHzMrQA8z");
 // export const mainTable = base("tbliwQjVfECiSHGAb");
 const departmentsTableID = "tblCKDpubPux5jjwS";
