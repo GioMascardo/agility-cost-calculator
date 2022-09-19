@@ -17,21 +17,21 @@
       phone: '',
     },
     onSubmit: (values) => {
-      let msg = {
-        to: values.email,
-        from: 'mascardogio@gmail.com',
-        subject: 'Agility Cost Calculator Summary',
-        text: `Good day Mr./Ms. ${values.lastName}, here's a summary of your team using our cost calculator:
-          ${$dashboardSummary.forEach(row => {
-            let {role, staffRequired, experienceLevel, hireWithAgility, hireOnshore, yourSavings} = row;
-            return `- Role: ${role}, Number of ${role}${staffRequired > 1 ? 's': ''}: ${staffRequired}, Experience Level: ${experienceLevel}, Hire With Us: ${hireWithAgility}, Hire Onshore: ${hireOnshore}, Your Savings: ${yourSavings}`
-          })}`,
-      };
-      sgMail.send(msg).then(() => {
-        console.log('Email sent')
-      }).catch((error) => {
-        console.error(error)
-      })
+      // let msg = {
+      //   to: values.email,
+      //   from: 'mascardogio@gmail.com',
+      //   subject: 'Agility Cost Calculator Summary',
+      //   text: `Good day Mr./Ms. ${values.lastName}, here's a summary of your team using our cost calculator:
+      //     ${$dashboardSummary.forEach(row => {
+      //       let {role, staffRequired, experienceLevel, hireWithAgility, hireOnshore, yourSavings} = row;
+      //       return `- Role: ${role}, Number of ${role}${staffRequired > 1 ? 's': ''}: ${staffRequired}, Experience Level: ${experienceLevel}, Hire With Us: ${hireWithAgility}, Hire Onshore: ${hireOnshore}, Your Savings: ${yourSavings}`
+      //     })}`,
+      // };
+      // sgMail.send(msg).then(() => {
+      //   console.log('Email sent')
+      // }).catch((error) => {
+      //   console.error(error)
+      // })
       dispatch('isDone');
     }
   });
