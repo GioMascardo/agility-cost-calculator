@@ -1,9 +1,10 @@
 import { writable, derived } from "svelte/store";
 import Airtable from "airtable";
+import "dotenv/config";
 
-const base = new Airtable({ apiKey: "keycC9XfHbK0Esewa" }).base(
-  "appH9R8fMHzMrQA8z"
-);
+const base = new Airtable({
+  apiKey: process.env.AIRTABLE_API_KEY,
+}).base("appH9R8fMHzMrQA8z");
 // export const mainTable = base("tbliwQjVfECiSHGAb");
 const departmentsTableID = "tblCKDpubPux5jjwS";
 
