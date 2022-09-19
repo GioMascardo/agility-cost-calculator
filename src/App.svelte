@@ -98,6 +98,8 @@
 
   :global(body) {
     font-family: 'Inter', sans-serif;
+    max-width: 76rem;
+    margin-inline: auto;
   }
 
   :global(button, input) {
