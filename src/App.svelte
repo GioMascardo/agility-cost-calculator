@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import Actions from './lib/Actions.svelte';
   import Dashboard from './lib/Dashboard.svelte';
   import fetchRoleList from "./lib/helper/fetchRolesList";
