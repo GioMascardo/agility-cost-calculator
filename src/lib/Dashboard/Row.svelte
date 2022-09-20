@@ -100,6 +100,7 @@
   :global(.experience-level-dropdown-button) {
     border: 1px solid var(--neutral-clr-300);
     border-radius: .5rem;
+    cursor: pointer;
     padding-block: .25rem;
     padding-inline: 1rem;
     display: flex;

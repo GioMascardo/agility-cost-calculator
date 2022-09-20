@@ -26,7 +26,7 @@
 
   .estimate-wrapper {
     display: flex;
-    gap: 2rem;
+    gap: .5rem 2rem;
     align-items: center;
   }
 

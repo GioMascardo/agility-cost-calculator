@@ -17,7 +17,7 @@
   }
 
   .empty-state-wrapper {
-    min-height: 30rem;
+    min-height: 20rem;
     display: grid;
     place-items: center;
   }

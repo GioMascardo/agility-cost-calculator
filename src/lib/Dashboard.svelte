@@ -36,8 +36,8 @@
 <style>
   .dashboard {
     overflow-y: scroll;
-    min-height: 23rem;
-    max-height: 23rem;
+    min-height: 20rem;
+    max-height: 20rem;
   }
   
   :global(.tabList) {
@@ -74,11 +74,13 @@
     border-bottom: 1px solid var(--neutral-clr-200);
     position: sticky;
     top: 0;
+    z-index: 10;
   }
 
   .top-row > th > h3 {
     font-size: .75rem;
     line-height: 1.125rem;
+    margin: 0;
   }
 
   th {
