@@ -137,7 +137,7 @@
     position: absolute;
     padding-block: 1rem;
     top: 2.5rem;
-    z-index: 10;
+    z-index: 20;
     min-width: max-content;
   }
 
