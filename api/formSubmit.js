@@ -1,6 +1,6 @@
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(import.meta.env.VITE_SG_API_KEY);
+sgMail.setApiKey(process.env.VITE_SG_API_KEY);
 
 export default async function handler(request, response) {
   const body = JSON.parse(request.body);
@@ -36,7 +36,16 @@ export default async function handler(request, response) {
     html: message.replace(/\r\n/g, "<br>"),
   };
 
-  sgMail.send(data);
+  sgMail.send(data).then(
+    () => {},
+    (error) => {
+      console.error(error);
+
+      if (error.response) {
+        console.error(error.response.body);
+      }
+    }
+  );
 
   return response.status(200).json({ res: "test response" });
 }
