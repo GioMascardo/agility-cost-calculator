@@ -1,6 +1,6 @@
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(import.meta.env.SG_API_KEY);
+sgMail.setApiKey(import.meta.env.VITE_SG_API_KEY);
 
 export default async function handler(request, response) {
   const body = JSON.parse(request.body);
@@ -20,7 +20,11 @@ export default async function handler(request, response) {
       } = row;
       return `- Role: ${role}, Number of ${role}${
         staffRequired > 1 ? "s" : ""
-      }: ${staffRequired}, Experience Level: ${experienceLevel}, Hire With Us: ${hireWithAgility}, Hire Onshore: ${hireOnshore}, Your Savings: ${yourSavings}\r\n`;
+      }: ${staffRequired}, 
+      Experience Level: ${experienceLevel}, 
+      Hire With Us: ${hireWithAgility}, 
+      Hire Onshore: ${hireOnshore}, 
+      Your Savings: ${yourSavings}\r\n`;
     })}
   `;
 
