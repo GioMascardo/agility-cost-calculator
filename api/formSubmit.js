@@ -28,7 +28,9 @@ export default async function handler(request, response) {
       "Content-Type": "application/json",
     },
     body: data,
-  });
+  })
+    .then((data) => console.log("Success:", data))
+    .catch((error) => console.log("Error:", error));
 
   // sgMail
   //   .send(data)
@@ -41,5 +43,5 @@ export default async function handler(request, response) {
   //     console.log(data);
   //   });
 
-  return response.status(200).json({ res: "test response" });
+  // return response.status(200).json({ res: "test response" });
 }
