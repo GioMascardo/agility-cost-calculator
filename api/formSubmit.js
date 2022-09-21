@@ -1,7 +1,7 @@
 import sgMail from "@sendgrid/mail";
 
 console.log("before setApiKey", process.env.SENDGRID_API_KEY);
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(import.meta.env.SENDGRID_API_KEY);
 
 export default async function handler(request, response) {
   if (request.method === "GET") {
@@ -25,9 +25,11 @@ export default async function handler(request, response) {
     .send(data)
     .then(() => {
       console.log("Email sent");
+      console.log(data);
     })
     .catch((error) => {
       console.error(error);
+      console.log(data);
     });
 
   return response.status(200).json({ res: "test response" });
