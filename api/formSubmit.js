@@ -36,16 +36,7 @@ export default async function handler(request, response) {
     html: message.replace(/\r\n/g, "<br>"),
   };
 
-  sgMail.send(data).then(
-    () => {},
-    (error) => {
-      console.error(error);
-
-      if (error.response) {
-        console.error(error.response.body);
-      }
-    }
-  );
+  sgMail.send(data);
 
   return response.status(200).json({ res: "test response" });
 }
