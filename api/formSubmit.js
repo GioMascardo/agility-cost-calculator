@@ -1,6 +1,6 @@
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(import.meta.env.VITE_SG_API_KEY);
+sgMail.setApiKey(process.env.SG_API_KEY);
 
 export default async function handler(request, response) {
   // const body = JSON.parse(request.body);
