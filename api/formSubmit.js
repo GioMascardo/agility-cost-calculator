@@ -1,7 +1,7 @@
 import sgMail from "@sendgrid/mail";
 
 console.log("before setApiKey", process.env.SENDGRID_API_KEY);
-sgMail.setApiKey(import.meta.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function handler(request, response) {
   if (request.method === "GET") {
