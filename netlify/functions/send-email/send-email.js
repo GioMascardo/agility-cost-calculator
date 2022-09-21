@@ -4,7 +4,7 @@
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.handler = (event) => {
-  if (request.method === "GET") {
+  if (event.method === "GET") {
     return response.status(200).json({ res: "successful get request" });
   }
   const body = JSON.parse(event.body);

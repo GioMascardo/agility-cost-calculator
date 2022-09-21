@@ -4,9 +4,6 @@
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default function handler(request, response) {
-  if (request.method === "GET") {
-    return response.status(200).json({ res: "successful get request" });
-  }
   const body = JSON.parse(request.body);
 
   const message = `
@@ -29,8 +26,14 @@ export default function handler(request, response) {
     },
     body: data,
   })
-    .then((data) => console.log("Success:", data))
-    .catch((error) => console.log("Error:", error));
+    .then((data) => {
+      console.log("Success:", data);
+      return response.status(200);
+    })
+    .catch((error) => {
+      console.log("Error:", error);
+      return response.status(500);
+    });
 
   // sgMail
   //   .send(data)
