@@ -1,7 +1,7 @@
-const mail = require("@sendgrid/mail");
+import sgMail from "@sendgrid/mail";
 
 console.log("before setApiKey", process.env.SENDGRID_API_KEY);
-mail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function handler(request, response) {
   if (request.method === "GET") {
@@ -21,7 +21,7 @@ export default async function handler(request, response) {
     text: message,
   };
 
-  mail
+  sgMail
     .send(data)
     .then(() => {
       console.log("Email sent");
