@@ -108,7 +108,6 @@
   }
 
   input {
-    text-transform: capitalize;
     border-radius: .5rem;
     padding: .75rem 1rem;
     border: 1px solid var(--neutral-clr-300);
