@@ -18,7 +18,14 @@ export default async function handler(request, response) {
     text: message,
   };
 
-  sgMail.send(data);
+  sgMail
+    .send(data)
+    .then(() => {
+      console.log("Email sent");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
   return response.status(200).json({ res: "test response" });
 }
