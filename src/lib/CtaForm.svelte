@@ -22,7 +22,10 @@
       };
 
       fetch('https://agility-cost-calculator.vercel.app/api/formSubmit', {
-        method: 'post',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(formData)
       })
       
