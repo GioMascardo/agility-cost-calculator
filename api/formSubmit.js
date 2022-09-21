@@ -23,16 +23,16 @@ export default async function handler(request, response) {
     text: message,
   };
 
-  // sgMail
-  //   .send(data)
-  //   .then(() => {
-  //     console.log("Email sent");
-  //     console.log(data);
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //     console.log(data);
-  //   });
+  sgMail
+    .send(data)
+    .then(() => {
+      console.log("Email sent");
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log(data);
+    });
 
   return response.status(200).json({ res: "test response" });
 }
