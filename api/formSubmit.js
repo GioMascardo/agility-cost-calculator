@@ -4,6 +4,9 @@ console.log("before setApiKey", process.env.SENDGRID_API_KEY);
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function handler(request, response) {
+  if (request.method === "GET") {
+    return response.status(200).json({ res: "successful get request" });
+  }
   const body = JSON.parse(request.body);
 
   const message = `
