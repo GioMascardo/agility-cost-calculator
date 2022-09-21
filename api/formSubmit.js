@@ -18,7 +18,7 @@ export default function handler(request, response) {
     text: message,
   };
 
-  fetch("https://api.sendgrid.com/v3/mail/send", {
+  request("https://api.sendgrid.com/v3/mail/send", {
     method: "post",
     headers: {
       Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,

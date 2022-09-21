@@ -4,9 +4,6 @@
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.handler = (event) => {
-  if (event.method === "GET") {
-    return response.status(200).json({ res: "successful get request" });
-  }
   const body = JSON.parse(event.body);
 
   const message = `
@@ -21,14 +18,31 @@ exports.handler = (event) => {
     text: message,
   };
 
-  fetch("https://api.sendgrid.com/v3/mail/send", {
+  // fetch("https://api.sendgrid.com/v3/mail/send", {
+  //   method: "post",
+  //   headers: {
+  //     Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: data,
+  // });
+
+  request("https://api.sendgrid.com/v3/mail/send", {
     method: "post",
     headers: {
       Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
       "Content-Type": "application/json",
     },
     body: data,
-  });
+  })
+    .then((data) => {
+      console.log("Success:", data);
+      return response.status(200);
+    })
+    .catch((error) => {
+      console.log("Error:", error);
+      return response.status(500);
+    });
 
   // sgMail
   //   .send(data)
