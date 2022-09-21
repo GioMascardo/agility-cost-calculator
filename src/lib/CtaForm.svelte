@@ -21,7 +21,7 @@
         dashboardSummary: $dashboardSummary
       };
 
-      fetch('https://agility-cost-calculator.vercel.app/api/formSubmit', {
+      fetch('https://agility-cost-calculator.netlify.app/.netlify/functions/send-email', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'

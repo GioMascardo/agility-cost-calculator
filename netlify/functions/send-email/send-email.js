@@ -1,68 +1,45 @@
-// with thanks to https://github.com/Urigo/graphql-modules/blob/8cb2fd7d9938a856f83e4eee2081384533771904/website/lambda/contact.js
-const process = require('process')
-const { promisify } = require('util')
+// import sgMail from "@sendgrid/mail";
 
-const sendMailLib = require('sendmail')
+// console.log("before setApiKey", process.env.SENDGRID_API_KEY);
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const { validateEmail, validateLength } = require('./validations')
-
-const sendMail = promisify(sendMailLib())
-
-const NAME_MIN_LENGTH = 3
-const NAME_MAX_LENGTH = 50
-const DETAILS_MIN_LENGTH = 10
-const DETAILS_MAX_LENGTH = 1e3
-
-const handler = async (event) => {
-  if (!process.env.CONTACT_EMAIL) {
-    return {
-      statusCode: 500,
-      body: 'process.env.CONTACT_EMAIL must be defined',
-    }
+export default async function handler(request, response) {
+  if (request.method === "GET") {
+    return response.status(200).json({ res: "successful get request" });
   }
+  const body = JSON.parse(request.body);
 
-  const body = JSON.parse(event.body)
+  const message = `
+    Good day Mr./Ms. ${body.lastName}, 
+    this is a test email.
+  `;
 
-  try {
-    validateLength('body.name', body.name, NAME_MIN_LENGTH, NAME_MAX_LENGTH)
-  } catch (error) {
-    return {
-      statusCode: 403,
-      body: error.message,
-    }
-  }
+  const data = {
+    to: `${body.email}`,
+    from: "mascardogio@gmail.com",
+    subject: "Agility Cost Calculator Summary",
+    text: message,
+  };
 
-  try {
-    validateEmail('body.email', body.email)
-  } catch (error) {
-    return {
-      statusCode: 403,
-      body: error.message,
-    }
-  }
+  fetch("https://api.sendgrid.com/v3/mail/send", {
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: data,
+  });
 
-  try {
-    validateLength('body.details', body.details, DETAILS_MIN_LENGTH, DETAILS_MAX_LENGTH)
-  } catch (error) {
-    return {
-      statusCode: 403,
-      body: error.message,
-    }
-  }
+  // sgMail
+  //   .send(data)
+  //   .then(() => {
+  //     console.log("Email sent");
+  //     console.log(data);
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //     console.log(data);
+  //   });
 
-  const descriptor = {
-    from: `"${body.email}" <no-reply@gql-modules.com>`,
-    to: process.env.CONTACT_EMAIL,
-    subject: `${body.name} sent you a message from gql-modules.com`,
-    text: body.details,
-  }
-
-  try {
-    await sendMail(descriptor)
-    return { statusCode: 200, body: '' }
-  } catch (error) {
-    return { statusCode: 500, body: error.message }
-  }
+  return response.status(200).json({ res: "test response" });
 }
-
-module.exports = { handler }
