@@ -45,7 +45,8 @@ export default async function handler(request, response) {
     Hire with us: ${hireWithAgility},
     Your savings: ${yourSavings}
     `;
-  });
+  }).join(`
+  `);
 
   const message = `
     Hi ${firstName}, here's a summary of your entries on our cost calculator app:
