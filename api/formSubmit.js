@@ -28,7 +28,7 @@ export default async function handler(request, response) {
   const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
 
   const message = `
-    Hi ${firstName}, here's a summary of your entries on our cost calculator app:\r\n \r\n
+    Hi ${firstName}, here's a summary of your entries on our cost calculator app:
     ${dashboardSummary.map((entry) => {
       const {
         role,
@@ -45,10 +45,12 @@ export default async function handler(request, response) {
       Experience Level: ${experienceLevel},
       Hire onshore: ${hireOnshore},
       Hire with us: ${hireWithAgility},
-      Your savings: ${yourSavings} \r\n `;
-    })}\r\n
+      Your savings: ${yourSavings}
+      
+      `;
+    })}
 
-    Your monthly cost estimate is: ${estimatedMonthlyCost}.\r\n
+    Your monthly cost estimate is: ${estimatedMonthlyCost}.
     Thank you for using our app. We will get back to you within 24 hours.
   `;
 
@@ -66,7 +68,7 @@ export default async function handler(request, response) {
       ...mailoptions,
       to: email,
       text: message,
-      text: message.replace(/\r\n/g, "<br>"),
+      text: message,
     };
 
     const result = await transport.sendMail(mailOptions);
