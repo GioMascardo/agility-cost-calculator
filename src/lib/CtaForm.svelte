@@ -1,7 +1,7 @@
   <script>
   import { createEventDispatcher } from "svelte";
   import { createForm } from "svelte-forms-lib";
-  import { dashboardSummary } from '../stores';
+  import { dashboardSummary, totalEstimate } from '../stores';
 
   const dispatch = createEventDispatcher();
 
@@ -16,7 +16,8 @@
     onSubmit: (values) => {
       const formData = {
         ...values,
-        dashboardSummary: $dashboardSummary
+        dashboardSummary: $dashboardSummary,
+        estimatedMonthlyCost: $totalEstimate
       };
 
       fetch('https://agility-cost-calculator.vercel.app/api/formSubmit', {

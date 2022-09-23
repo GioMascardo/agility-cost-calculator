@@ -1,17 +1,6 @@
 import { google } from "googleapis";
 import nodemailer from "nodemailer";
 
-const generateConfig = (url, accessToken) => {
-  return {
-    method: "get",
-    url: url,
-    headers: {
-      Authorization: `Bearer ${accessToken} `,
-      "Content-type": "application/json",
-    },
-  };
-};
-
 const auth = {
   type: "OAuth2",
   user: "mascardogio@gmail.com",
@@ -34,9 +23,9 @@ export default async function handler(request, response) {
 
   oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
-  const data = JSON.parse(request.body);
+  // const data = JSON.parse(request.body);
 
-  const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
+  // const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
 
   // const message = `
   //   Hi ${firstName}, here's a summary of your entries on our cost calculator app:\r\n \r\n
@@ -72,7 +61,7 @@ export default async function handler(request, response) {
 
     const mailOptions = {
       ...mailoptions,
-      to: email,
+      to: "gl.mascardo@gmail.com",
       text: `Hi! Thank you for using our cost calculator app. We've received your form submission. We'll get back to you within 24 hours.`,
     };
 
