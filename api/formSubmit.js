@@ -27,7 +27,7 @@ const mailoptions = {
 };
 
 export default async function handler(request, response) {
-  const oAuth2Client = new google.auth.oAuth2(
+  const oAuth2Client = new google.auth.OAuth2(
     process.env.CLIENT_ID,
     process.env.CLIENT_SECRET,
     process.env.REDIRECT_URL
