@@ -38,27 +38,27 @@ export default async function handler(request, response) {
 
   const { firstName, email, dashboardSummary } = data;
 
-  const message = `
-    Hi ${firstName}, here's a summary of your entries on our cost calculator app:\r\n \r\n
-    ${dashboardSummary.map((entry) => {
-      const {
-        role,
-        staffRequired,
-        experienceLevel,
-        hireWithAgility,
-        hireOnshore,
-        yourSavings,
-      } = entry;
+  // const message = `
+  //   Hi ${firstName}, here's a summary of your entries on our cost calculator app:\r\n \r\n
+  //   ${dashboardSummary.map((entry) => {
+  //     const {
+  //       role,
+  //       staffRequired,
+  //       experienceLevel,
+  //       hireWithAgility,
+  //       hireOnshore,
+  //       yourSavings,
+  //     } = entry;
 
-      return `
-      Role: ${role},
-      No. of staff: ${staffRequired}, 
-      Experience Level: ${experienceLevel},
-      Hire onshore: ${hireOnshore},
-      Hire with us: ${hireWithAgility},
-      Your savings: ${yourSavings} \r\n \r\n`;
-    })}
-  `;
+  //     return `
+  //     Role: ${role},
+  //     No. of staff: ${staffRequired},
+  //     Experience Level: ${experienceLevel},
+  //     Hire onshore: ${hireOnshore},
+  //     Hire with us: ${hireWithAgility},
+  //     Your savings: ${yourSavings} \r\n \r\n`;
+  //   })}
+  // `;
 
   try {
     const accessToken = await oAuth2Client.getAccessToken();
@@ -70,11 +70,18 @@ export default async function handler(request, response) {
       },
     });
 
+    // const mailOptions = {
+    //   ...mailoptions,
+    //   to: email,
+    //   text: message,
+    //   html: message.replace(/\r\n/g, "<br>"),
+    // };
+
     const mailOptions = {
       ...mailoptions,
       to: email,
-      text: message,
-      html: message.replace(/\r\n/g, "<br>"),
+      text: `${firstName}`,
+      html: `${firstName}`,
     };
 
     const result = await transport.sendMail(mailOptions);

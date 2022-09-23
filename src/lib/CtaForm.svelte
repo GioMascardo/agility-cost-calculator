@@ -2,8 +2,6 @@
   import { createEventDispatcher } from "svelte";
   import { createForm } from "svelte-forms-lib";
   import { dashboardSummary } from '../stores';
-  import sgMail from '@sendgrid/mail'
-  sgMail.setApiKey(import.meta.env.SG_API_KEY);
 
   const dispatch = createEventDispatcher();
 
