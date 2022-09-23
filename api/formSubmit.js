@@ -21,8 +21,8 @@ const auth = {
 };
 
 const mailoptions = {
-  from: "inquiry@agilitystaffingservices.com",
-  subject: "Gmail API NodeJS",
+  from: "Agility Staffing Solutions <inquiry@agilitystaffingservices.com>",
+  subject: "Agility Staffing Solutions Cost Calculator",
 };
 
 export default async function handler(request, response) {
@@ -36,7 +36,7 @@ export default async function handler(request, response) {
 
   const data = JSON.parse(request.body);
 
-  const { firstName, email, dashboardSummary } = data;
+  const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
 
   // const message = `
   //   Hi ${firstName}, here's a summary of your entries on our cost calculator app:\r\n \r\n
@@ -70,18 +70,10 @@ export default async function handler(request, response) {
       },
     });
 
-    // const mailOptions = {
-    //   ...mailoptions,
-    //   to: email,
-    //   text: message,
-    //   html: message.replace(/\r\n/g, "<br>"),
-    // };
-
     const mailOptions = {
       ...mailoptions,
       to: email,
-      text: `${firstName}`,
-      html: `${firstName}`,
+      text: `Hi! Thank you for using our cost calculator app. We've received your form submission. We'll get back to you within 24 hours.`,
     };
 
     const result = await transport.sendMail(mailOptions);
