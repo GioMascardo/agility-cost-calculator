@@ -26,49 +26,52 @@ export default async function handler(request, response) {
   const data = request.body;
 
   const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
-  console.log(firstName, email, dashboardSummary, estimatedMonthlyCost);
 
-  // const message = `
-  //   Hi ${firstName}, here's a summary of your entries on our cost calculator app:\r\n \r\n
-  //   ${dashboardSummary.map((entry) => {
-  //     const {
-  //       role,
-  //       staffRequired,
-  //       experienceLevel,
-  //       hireWithAgility,
-  //       hireOnshore,
-  //       yourSavings,
-  //     } = entry;
+  const message = `
+    Hi ${firstName}, here's a summary of your entries on our cost calculator app:\r\n \r\n
+    ${dashboardSummary.map((entry) => {
+      const {
+        role,
+        staffRequired,
+        experienceLevel,
+        hireWithAgility,
+        hireOnshore,
+        yourSavings,
+      } = entry;
 
-  //     return `
-  //     Role: ${role},
-  //     No. of staff: ${staffRequired},
-  //     Experience Level: ${experienceLevel},
-  //     Hire onshore: ${hireOnshore},
-  //     Hire with us: ${hireWithAgility},
-  //     Your savings: ${yourSavings} \r\n \r\n`;
-  //   })}
-  // `;
+      return `
+      Role: ${role},
+      No. of staff: ${staffRequired},
+      Experience Level: ${experienceLevel},
+      Hire onshore: ${hireOnshore},
+      Hire with us: ${hireWithAgility},
+      Your savings: ${yourSavings} \r\n `;
+    })}\r\n
 
-  // try {
-  //   const accessToken = await oAuth2Client.getAccessToken();
-  //   const transport = nodemailer.createTransport({
-  //     service: "gmail",
-  //     auth: {
-  //       ...auth,
-  //       accessToken: accessToken,
-  //     },
-  //   });
+    Your monthly cost estimate is: ${estimatedMonthlyCost}.\r\n
+    Thank you for using our app. We will get back to you within 24 hours.
+  `;
 
-  //   const mailOptions = {
-  //     ...mailoptions,
-  //     to: "gl.mascardo@gmail.com",
-  //     text: `Hi! Thank you for using our cost calculator app. We've received your form submission. We'll get back to you within 24 hours.`,
-  //   };
+  try {
+    const accessToken = await oAuth2Client.getAccessToken();
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        ...auth,
+        accessToken: accessToken,
+      },
+    });
 
-  //   const result = await transport.sendMail(mailOptions);
-  //   response.send(result);
-  // } catch (error) {
-  //   console.error(error);
-  // }
+    const mailOptions = {
+      ...mailoptions,
+      to: email,
+      text: message,
+      text: message.replace(/\r\n/g, "<br>"),
+    };
+
+    const result = await transport.sendMail(mailOptions);
+    response.send(result);
+  } catch (error) {
+    console.error(error);
+  }
 }
