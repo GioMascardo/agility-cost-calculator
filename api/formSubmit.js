@@ -23,7 +23,7 @@ export default async function handler(request, response) {
 
   oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
-  // const data = JSON.parse(request.body);
+  response(request);
 
   // const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
 
@@ -49,26 +49,25 @@ export default async function handler(request, response) {
   //   })}
   // `;
 
-  try {
-    const accessToken = await oAuth2Client.getAccessToken();
-    const transport = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        ...auth,
-        accessToken: accessToken,
-      },
-    });
+  // try {
+  //   const accessToken = await oAuth2Client.getAccessToken();
+  //   const transport = nodemailer.createTransport({
+  //     service: "gmail",
+  //     auth: {
+  //       ...auth,
+  //       accessToken: accessToken,
+  //     },
+  //   });
 
-    const mailOptions = {
-      ...mailoptions,
-      to: "gl.mascardo@gmail.com",
-      text: `Hi! Thank you for using our cost calculator app. We've received your form submission. We'll get back to you within 24 hours.`,
-    };
+  //   const mailOptions = {
+  //     ...mailoptions,
+  //     to: "gl.mascardo@gmail.com",
+  //     text: `Hi! Thank you for using our cost calculator app. We've received your form submission. We'll get back to you within 24 hours.`,
+  //   };
 
-    const result = await transport.sendMail(mailOptions);
-    response.send(result);
-  } catch (error) {
-    console.error(error);
-    response.send(error);
-  }
+  //   const result = await transport.sendMail(mailOptions);
+  //   response.send(result);
+  // } catch (error) {
+  //   console.error(error);
+  // }
 }
