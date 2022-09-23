@@ -23,10 +23,10 @@ export default async function handler(request, response) {
 
   oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
-  console.log(request.body);
-  response.send(request.body);
+  const data = request.body;
 
-  // const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
+  const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
+  console.log(firstName, email, dashboardSummary, estimatedMonthlyCost);
 
   // const message = `
   //   Hi ${firstName}, here's a summary of your entries on our cost calculator app:\r\n \r\n
