@@ -14,7 +14,7 @@ const generateConfig = (url, accessToken) => {
 
 const auth = {
   type: "OAuth2",
-  user: "sid.cd.varma@gmail.com",
+  user: "mascardogio@gmail.com",
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
   refreshToken: process.env.REFRESH_TOKEN,
