@@ -59,7 +59,7 @@
     <div class="dialog-content">
       <DialogTitle class="dialog-title">Thank you for your form submission!</DialogTitle>
       <DialogDescription class="dialog-description">We've sent a summary of the data to your email. We'll reach out within 24 hours.</DialogDescription>
-      <button on:click={closeModal}>Close</button>
+      <button class="close-button" on:click={closeModal}>Close</button>
     </div>
   {:else}
     <div class="dialog-content">
@@ -195,6 +195,18 @@
     border-radius: .75rem;
     display: flex;
     flex-direction: column;
+  }
+
+  .close-button {
+    flex-grow: 1;
+    padding: 10px 18px;
+    border: 1px solid var(--neutral-clr-300);
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: .5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
   }
 
   :global(.dialog-title) {

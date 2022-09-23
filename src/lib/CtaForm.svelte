@@ -146,6 +146,10 @@
     cursor: pointer;
   }
 
+  .form-action-buttons > button:focus-visible {
+    outline-color: var(--primary-clr-200);
+  }
+
   .cancel-button {
     background-color: white;
   }
