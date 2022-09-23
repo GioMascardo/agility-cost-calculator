@@ -27,28 +27,30 @@ export default async function handler(request, response) {
 
   const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
 
+  const dashboardSummaryString = dashboardSummary.map((entry) => {
+    const {
+      role,
+      staffRequired,
+      experienceLevel,
+      hireWithAgility,
+      hireOnshore,
+      yourSavings,
+    } = entry;
+
+    return `
+    Role: ${role},
+    No. of staff: ${staffRequired},
+    Experience Level: ${experienceLevel},
+    Hire onshore: ${hireOnshore},
+    Hire with us: ${hireWithAgility},
+    Your savings: ${yourSavings}
+    `;
+  });
+
   const message = `
     Hi ${firstName}, here's a summary of your entries on our cost calculator app:
-    ${dashboardSummary.map((entry) => {
-      const {
-        role,
-        staffRequired,
-        experienceLevel,
-        hireWithAgility,
-        hireOnshore,
-        yourSavings,
-      } = entry;
 
-      return `
-      Role: ${role},
-      No. of staff: ${staffRequired},
-      Experience Level: ${experienceLevel},
-      Hire onshore: ${hireOnshore},
-      Hire with us: ${hireWithAgility},
-      Your savings: ${yourSavings}
-      
-      `;
-    })}
+    ${dashboardSummaryString}
 
     Your monthly cost estimate is: ${estimatedMonthlyCost}.
     Thank you for using our app. We will get back to you within 24 hours.
