@@ -23,8 +23,8 @@ export default async function handler(request, response) {
 
   oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
-  console.log(request);
-  response.send(request);
+  console.log(request.body);
+  response.send(request.body);
 
   // const { firstName, email, dashboardSummary, estimatedMonthlyCost } = data;
 
