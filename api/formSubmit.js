@@ -40,13 +40,13 @@ export default async function handler(request, response) {
     const transport = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        auth,
+        ...auth,
         accessToken: accessToken,
       },
     });
 
     const mailOptions = {
-      mailoptions,
+      ...mailoptions,
       text: "The Gmail API with NodeJS works",
     };
 
