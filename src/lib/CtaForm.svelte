@@ -26,14 +26,14 @@
         } = entry;
 
           return `
-          Role: ${role},
-          No. of staff: ${staffRequired},
-          Experience Level: ${experienceLevel},
-          Hire onshore: ${hireOnshore},
-          Hire with us: ${hireWithAgility},
-          Your savings: ${yourSavings}
+          Role: ${role},\r\n
+          No. of staff: ${staffRequired},\r\n
+          Experience Level: ${experienceLevel},\r\n
+          Hire onshore: ${hireOnshore},\r\n
+          Hire with us: ${hireWithAgility},\r\n
+          Your savings: ${yourSavings}\r\n
           `;
-        }).join(`
+        }).join(`\r\n
       `);
 
       const totalEstimateString = `${$currentCurrency === 'gbp' ? '£' : '$'}${$totalEstimate}`
