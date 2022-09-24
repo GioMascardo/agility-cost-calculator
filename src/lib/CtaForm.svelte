@@ -1,5 +1,5 @@
   <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import { createForm } from "svelte-forms-lib";
   import { dashboardSummary, totalEstimate, currentCurrency } from '../stores';
   import emailjs from '@emailjs/browser';
@@ -62,8 +62,6 @@
       dispatch('isDone');
     }
   });
-
-  
   </script>
 
   <form on:submit={handleSubmit}>
@@ -120,7 +118,11 @@
       bind:value={$form.phone}
     />
 
-    <div class="g-recaptcha" data-sitekey="6Lfq1iciAAAAAKVQ9al5XQFv9xPKioc3V7ApMpHp"></div>
+    <!-- <div
+      class="g-recaptcha"
+      data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+    ></div>
+    <br/> -->
 
     <div class="form-action-buttons">
       <button class="cancel-button" on:click={() => dispatch('closeModal')}>Cancel</button>
