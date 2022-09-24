@@ -52,7 +52,7 @@
       //   body: JSON.stringify(formData)
       // })
 
-      emailjs.send('service_acz31tj', 'template_gzvm0jk', formData).
+      emailjs.send('service_acz31tj', 'template_gzvm0jk', formData, 'h4o2Zg3F3PHQtr9PC').
         then((result) => {
             console.log('SUCCESS!', result.text);
         }, (error) => {
