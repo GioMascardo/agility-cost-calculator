@@ -17,6 +17,7 @@
     "vite-plugin-top-level-await": "^1.1.1"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.7.0",
     "@mailchimp/mailchimp_transactional": "^1.0.47",
     "@sendgrid/mail": "^7.7.0",
     "airtable": "^0.11.4",

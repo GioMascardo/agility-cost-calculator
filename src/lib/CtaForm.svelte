@@ -1,7 +1,8 @@
   <script>
   import { createEventDispatcher } from "svelte";
   import { createForm } from "svelte-forms-lib";
-  import { dashboardSummary, totalEstimate } from '../stores';
+  import { dashboardSummary, totalEstimate, currentCurrency } from '../stores';
+  import emailjs from '@emailjs/browser';
 
   const dispatch = createEventDispatcher();
 
@@ -14,19 +15,49 @@
       phone: '',
     },
     onSubmit: (values) => {
+      const dashboardSummaryString = $dashboardSummary.map((entry) => {
+        const {
+          role,
+          staffRequired,
+          experienceLevel,
+          hireWithAgility,
+          hireOnshore,
+          yourSavings,
+        } = entry;
+
+          return `
+          Role: ${role},
+          No. of staff: ${staffRequired},
+          Experience Level: ${experienceLevel},
+          Hire onshore: ${hireOnshore},
+          Hire with us: ${hireWithAgility},
+          Your savings: ${yourSavings}
+          `;
+        }).join(`
+      `);
+
+      const totalEstimateString = `${$currentCurrency === 'gbp' ? '£' : '$'}${$totalEstimate}`
+
       const formData = {
         ...values,
-        dashboardSummary: $dashboardSummary,
-        estimatedMonthlyCost: $totalEstimate
+        dashboardSummary: dashboardSummaryString,
+        estimatedMonthlyCost: totalEstimateString
       };
 
-      fetch('https://agility-cost-calculator.vercel.app/api/formSubmit', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
+      // fetch('https://agility-cost-calculator.vercel.app/api/formSubmit', {
+      //   method: 'post',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(formData)
+      // })
+
+      emailjs.send('service_acz31tj', 'template_gzvm0jk', formData).
+        then((result) => {
+            console.log('SUCCESS!', result.text);
+        }, (error) => {
+            console.log('FAILED...', error.text);
+        });
       
       dispatch('isDone');
     }
@@ -88,6 +119,8 @@
       on:change={handleChange}
       bind:value={$form.phone}
     />
+
+    <div class="g-recaptcha" data-sitekey="6Lfq1iciAAAAAKVQ9al5XQFv9xPKioc3V7ApMpHp"></div>
 
     <div class="form-action-buttons">
       <button class="cancel-button" on:click={() => dispatch('closeModal')}>Cancel</button>
