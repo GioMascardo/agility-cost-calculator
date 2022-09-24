@@ -100,6 +100,7 @@
     font-family: 'Inter', sans-serif;
     max-width: 76rem;
     margin-inline: auto;
+    margin-block: 0;
   }
 
   :global(button, input) {
