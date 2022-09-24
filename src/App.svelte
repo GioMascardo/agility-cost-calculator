@@ -100,14 +100,14 @@
     font-family: 'Inter', sans-serif;
     max-width: 76rem;
     margin-inline: auto;
-    margin-block: 0;
+    margin-block: 50px;
   }
 
   :global(button, input) {
     font-family: 'Inter', sans-serif;
   }
 
-  :global(::-webkit-scrollbar) {
+  /* :global(::-webkit-scrollbar) {
     width: .5rem;
     height: .5rem;
   }
@@ -117,7 +117,7 @@
   :global(::-webkit-scrollbar-thumb) {
     background-color: var(--primary-clr-200);
     border-radius: 1rem;
-  }
+  } */
 
   main {
     max-width: 76rem;

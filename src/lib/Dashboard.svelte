@@ -1,6 +1,6 @@
 <script>
   export let entryList;
-  import {isWorkFromHome, selectedWorkOption} from '../stores';
+  import {isWorkFromHome} from '../stores';
   import Row from './Dashboard/Row.svelte';
   import {
     TabGroup,
@@ -35,9 +35,7 @@
 
 <style>
   .dashboard {
-    overflow-y: scroll;
     min-height: 20rem;
-    max-height: 20rem;
   }
   
   :global(.tabList) {
