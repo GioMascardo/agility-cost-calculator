@@ -68,9 +68,6 @@
 
       // reset any errors
       error = '';
-      
-      // tell recaptcha to process a request
-      window.grecaptcha.execute();
 
       emailjs.send('service_acz31tj', 'template_gzvm0jk', formData, 'h4o2Zg3F3PHQtr9PC').
         then((result) => {
