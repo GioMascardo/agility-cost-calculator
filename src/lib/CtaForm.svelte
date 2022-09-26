@@ -10,7 +10,6 @@
   let recaptchaToken = undefined;
   function handleCaptchaCallback(token) {
     recaptchaToken = token;
-    resetCaptcha()
   }
 
   const resetCaptcha = () => {
