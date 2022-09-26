@@ -6,6 +6,8 @@ const base = new Airtable({
 }).base("appmmz8CRrkwSw3Om");
 const departmentsTableID = "tblhXlpRgzfhwZMcF";
 
+export let isLoading = writable(true);
+
 export const departmentsTable = await base(departmentsTableID)
   .select()
   .firstPage();
