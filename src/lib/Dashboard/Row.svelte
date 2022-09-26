@@ -9,7 +9,6 @@
     MenuItem,
   } from "@rgossiaux/svelte-headlessui";
   import { createEventDispatcher, onDestroy } from "svelte";
-  import { loop_guard } from "svelte/internal";
   import { isWorkFromHome, selectedWorkOption, currentCurrency, estimateObjectArr, dashboardSummary } from '../../stores';
   import Counter from "../Counter.svelte";
   const dispatch = createEventDispatcher();

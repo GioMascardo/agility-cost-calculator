@@ -2,13 +2,13 @@ import Airtable from "airtable";
 
 const base = new Airtable({
   apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
-}).base("app50vqJxIvrcmWf9");
+}).base("appH9R8fMHzMrQA8z");
 
 export default async function fetchRoleList(role) {
   let workFromHomeArr = [];
   let officeArr = [];
 
-  const filteredRecords = await base("tbls3ucbJyYatNXyR")
+  const filteredRecords = await base("tblsgzEtohNg2ngs6")
     .select({ filterByFormula: `NOT({Roles} != '${role}')` })
     .all();
 
