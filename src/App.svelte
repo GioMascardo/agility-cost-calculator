@@ -97,6 +97,7 @@
   }
 
   :global(body) {
+    background-color: white;
     font-family: 'Inter', sans-serif;
     max-width: 76rem;
     margin-inline: auto;
