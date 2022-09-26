@@ -3,9 +3,8 @@ import Airtable from "airtable";
 
 const base = new Airtable({
   apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
-}).base("appH9R8fMHzMrQA8z");
-// export const mainTable = base("tbliwQjVfECiSHGAb");
-const departmentsTableID = "tblCKDpubPux5jjwS";
+}).base("appmmz8CRrkwSw3Om");
+const departmentsTableID = "tblhXlpRgzfhwZMcF";
 
 export const departmentsTable = await base(departmentsTableID)
   .select()
