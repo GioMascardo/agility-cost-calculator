@@ -1,10 +1,32 @@
-  <script>
+<script>
   import { createEventDispatcher, onMount } from "svelte";
   import { createForm } from "svelte-forms-lib";
   import { dashboardSummary, totalEstimate, currentCurrency } from '../stores';
   import emailjs from '@emailjs/browser';
 
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   const dispatch = createEventDispatcher();
+
+  let recaptchaToken = undefined;
+  function handleCaptchaCallback(token) {
+    recaptchaToken = token;
+    resetCaptcha()
+  }
+
+  const resetCaptcha = () => {
+    window.grecaptcha.reset();
+  };
+
+  let error = '';
+  const handleCaptchaError = () => {
+    error = 'Recaptcha error. Please reload the page';
+  };
+
+  onMount(() => {
+    window.handleCaptchaCallback = handleCaptchaCallback;
+    window.handleCaptchaError = handleCaptchaError;
+    window.resetCaptcha = resetCaptcha;
+  });
 
   const { form, handleChange, handleSubmit } = createForm({
     initialValues: {
@@ -25,14 +47,14 @@
           yourSavings,
         } = entry;
 
-          return `
+        return `
           Role: ${role},\r\n
           No. of staff: ${staffRequired},\r\n
           Experience Level: ${experienceLevel},\r\n
           Hire onshore: ${hireOnshore},\r\n
           Hire with us: ${hireWithAgility},\r\n
           Your savings: ${yourSavings}\r\n
-          `;
+        `;
         }).join(`\r\n
       `);
 
@@ -41,16 +63,15 @@
       const formData = {
         ...values,
         dashboardSummary: dashboardSummaryString,
-        estimatedMonthlyCost: totalEstimateString
+        estimatedMonthlyCost: totalEstimateString,
+        'g-recaptcha-response': recaptchaToken
       };
 
-      // fetch('https://agility-cost-calculator.vercel.app/api/formSubmit', {
-      //   method: 'post',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(formData)
-      // })
+      // reset any errors
+      error = '';
+      
+      // tell recaptcha to process a request
+      window.grecaptcha.execute();
 
       emailjs.send('service_acz31tj', 'template_gzvm0jk', formData, 'h4o2Zg3F3PHQtr9PC').
         then((result) => {
@@ -62,9 +83,19 @@
       dispatch('isDone');
     }
   });
-  </script>
+</script>
+
+<svelte:head>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</svelte:head>
 
   <form on:submit={handleSubmit}>
+    {#if error}
+      <div>
+        <small>{error}</small>
+      </div>
+    {/if}
+
     <label for="firstName">First Name</label>
     <input
       id="firstName"
@@ -118,15 +149,17 @@
       bind:value={$form.phone}
     />
 
-    <!-- <div
+    <div
       class="g-recaptcha"
-      data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-    ></div>
-    <br/> -->
+      data-sitekey={RECAPTCHA_SITE_KEY}
+      data-callback="handleCaptchaCallback"
+      data-expired-callback="resetCaptcha"
+      data-error-callback="handleCaptchaError"
+    />
 
     <div class="form-action-buttons">
       <button class="cancel-button" on:click={() => dispatch('closeModal')}>Cancel</button>
-      <button class="primary-button submit" type='submit'>Submit</button>
+      <button class={recaptchaToken === undefined ? 'disabled' : 'primary-button submit'} type='submit' disabled={recaptchaToken === undefined} style={recaptchaToken === undefined ? 'cursor: default' : ''}>Submit</button>
     </div>
   </form>
 
