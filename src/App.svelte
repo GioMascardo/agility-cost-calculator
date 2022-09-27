@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import {departmentsList} from './stores'
   import { Circle } from 'svelte-loading-spinners';
   import Actions from './lib/Actions.svelte';
   import Dashboard from './lib/Dashboard.svelte';
@@ -14,7 +14,31 @@
     DialogDescription,
   } from "@rgossiaux/svelte-headlessui";
   import CtaForm from './lib/CtaForm.svelte';
-  
+  import Airtable from "airtable";
+
+const base = new Airtable({
+    apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
+  }).base("appH9R8fMHzMrQA8z");
+  const departmentsTableID = "tblCKDpubPux5jjwS";
+
+  const airtablePromise = base(departmentsTableID).select().firstPage();
+  let apiData;
+  async function fetchDepartmentsList() {
+    const response = await airtablePromise;
+    const data = response.map((record) => {
+      return {
+        departmentName: record.fields.departments,
+        departmentRoles: record.fields.roles,
+      };
+    })
+
+    apiData = data;
+  }
+  $: fetchDepartmentsList();
+
+  $: $departmentsList = apiData;
+  console.log($departmentsList);
+
   $: entryList = [];
   $: addRoleHandler = async (event) => {
     let newEntry;
@@ -24,9 +48,6 @@
     entryList = [...entryList, newEntry];
   }
 
-  // newEntry = [[{...}, {...}, {id: ...}]]
-  // entry = [{...}, {...}, {id: ...}]
-
   $: deleteDispatchHandler = (event) => {
     entryList = entryList.filter(entry => entry[2].id !== event.detail);
   }
@@ -34,23 +55,28 @@
   let isModalOpen = false;
   let isDoneWithForm = false;
   const closeModal = () => isModalOpen = false;
-  function formSubmitHandler() {
-    isDoneWithForm = true;
-  }
+  function formSubmitHandler() { isDoneWithForm = true; }
 </script>
 
-<main class="calculator">
-  <div class="container flex-column-gap">
-    {#if entryList.length === 0}
-      <EmptyState on:addRole={addRoleHandler} />
-    {:else}
-      <Actions on:addRole={addRoleHandler}/>
-      <Dashboard {entryList} on:delete={deleteDispatchHandler} />
-      <Summary on:toggleModal={() => isModalOpen = !isModalOpen} />
-    {/if}
+{#await airtablePromise}
+  <div class="loading">
+    <Circle color='var(--primary-clr-500)' duration='1s' />
   </div>
-</main>
+{:then}
+  <main class="calculator">
+    <div class="container flex-column-gap">
+      {#if entryList.length === 0}
+        <EmptyState on:addRole={addRoleHandler} />
+      {:else}
+        <Actions on:addRole={addRoleHandler}/>
+        <Dashboard {entryList} on:delete={deleteDispatchHandler} />
+        <Summary on:toggleModal={() => isModalOpen = !isModalOpen} />
+      {/if}
+    </div>
+  </main>
+{/await}
 
+    
 <Dialog class="dialog-wrapper" open={isModalOpen} on:close={() => {isModalOpen = false}}>
   <DialogOverlay class="dialog-overlay" />
   <button on:click={closeModal} class="close-x-button">
@@ -108,18 +134,6 @@
   :global(button, input) {
     font-family: 'Inter', sans-serif;
   }
-
-  /* :global(::-webkit-scrollbar) {
-    width: .5rem;
-    height: .5rem;
-  }
-  :global(::-webkit-scrollbar-track) {
-    background-color: var(--primary-clr-50);
-  }
-  :global(::-webkit-scrollbar-thumb) {
-    background-color: var(--primary-clr-200);
-    border-radius: 1rem;
-  } */
 
   main {
     max-width: 76rem;
@@ -227,5 +241,14 @@
     line-height: 1.25rem;
     margin: 0;
     margin-bottom: 2rem;
+  }
+
+  .loading {
+    --size: 6rem;
+    position: absolute;
+    top: var(--size);
+    inset-inline: calc(50% - calc(var(--size)/2));
+    height: var(--size);
+    width: var(--size);
   }
 </style>

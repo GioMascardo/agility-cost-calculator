@@ -1,21 +1,23 @@
 import { writable, derived } from "svelte/store";
-import Airtable from "airtable";
+// import Airtable from "airtable";
 
-const base = new Airtable({
-  apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
-}).base("appH9R8fMHzMrQA8z");
-const departmentsTableID = "tblCKDpubPux5jjwS";
+// const base = new Airtable({
+//   apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
+// }).base("appH9R8fMHzMrQA8z");
+// const departmentsTableID = "tblCKDpubPux5jjwS";
 
-export const departmentsTable = await base(departmentsTableID)
-  .select()
-  .firstPage();
+// export const airtablePromise = base(departmentsTableID).select().firstPage();
 
-export const departmentsList = departmentsTable.map((record) => {
-  return {
-    departmentName: record.fields.departments,
-    departmentRoles: record.fields.roles,
-  };
-});
+// export const departmentsTable = await airtablePromise;
+
+// export const departmentsList = departmentsTable.map((record) => {
+//   return {
+//     departmentName: record.fields.departments,
+//     departmentRoles: record.fields.roles,
+//   };
+// });
+
+export const departmentsList = writable([]);
 
 export const locations = [
   "United States",

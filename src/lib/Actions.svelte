@@ -16,7 +16,7 @@
   $: departmentRoles = roles;
 
   function departmentHandler(department) {
-    let departmentRecord = departmentsList.find(findDepartment => findDepartment.departmentName === department.departmentName);
+    let departmentRecord = $departmentsList.find(findDepartment => findDepartment.departmentName === department.departmentName);
     selectedDepartment = departmentRecord.departmentName;
     departmentRoles = departmentRecord.departmentRoles;
     selectedRole = ''
@@ -37,7 +37,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </MenuButton>
         <MenuItems class="menu-items-wrapper">
-          {#each departmentsList as department}
+          {#each $departmentsList as department}
             <MenuItem class={selectedDepartment === department ? 'selectedItem' : ''}>
               <button class="menu-item-button" on:click={() => departmentHandler(department)}>{department.departmentName}</button>
             </MenuItem>
