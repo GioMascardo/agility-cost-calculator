@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte';
+  import { Circle } from 'svelte-loading-spinners';
   import Actions from './lib/Actions.svelte';
   import Dashboard from './lib/Dashboard.svelte';
   import fetchRoleList from "./lib/helper/fetchRolesList";
@@ -12,7 +14,6 @@
     DialogDescription,
   } from "@rgossiaux/svelte-headlessui";
   import CtaForm from './lib/CtaForm.svelte';
-  import {isLoading} from './stores';
   
   $: entryList = [];
   $: addRoleHandler = async (event) => {
@@ -38,24 +39,17 @@
   }
 </script>
 
-{#if isLoading}
-  <div class="loading">
-    <p>loading...</p>
+<main class="calculator">
+  <div class="container flex-column-gap">
+    {#if entryList.length === 0}
+      <EmptyState on:addRole={addRoleHandler} />
+    {:else}
+      <Actions on:addRole={addRoleHandler}/>
+      <Dashboard {entryList} on:delete={deleteDispatchHandler} />
+      <Summary on:toggleModal={() => isModalOpen = !isModalOpen} />
+    {/if}
   </div>
-{:else}
-  <main class="calculator">
-    <div class="container flex-column-gap">
-      {#if entryList.length === 0}
-        <EmptyState on:addRole={addRoleHandler} />
-      {:else}
-        <Actions on:addRole={addRoleHandler}/>
-        <Dashboard {entryList} on:delete={deleteDispatchHandler} />
-        <Summary on:toggleModal={() => isModalOpen = !isModalOpen} />
-      {/if}
-    </div>
-  </main> 
-{/if}
-
+</main>
 
 <Dialog class="dialog-wrapper" open={isModalOpen} on:close={() => {isModalOpen = false}}>
   <DialogOverlay class="dialog-overlay" />
@@ -104,6 +98,7 @@
   }
 
   :global(body) {
+    background-color: white;
     font-family: 'Inter', sans-serif;
     max-width: 76rem;
     margin-inline: auto;
@@ -232,11 +227,5 @@
     line-height: 1.25rem;
     margin: 0;
     margin-bottom: 2rem;
-  }
-
-  .loading {
-    height: 100%;
-    display: grid;
-    place-items: center;
   }
 </style>

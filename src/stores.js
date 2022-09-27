@@ -3,16 +3,12 @@ import Airtable from "airtable";
 
 const base = new Airtable({
   apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
-}).base("appmmz8CRrkwSw3Om");
-const departmentsTableID = "tblhXlpRgzfhwZMcF";
-
-export let isLoading = writable(true);
+}).base("appH9R8fMHzMrQA8z");
+const departmentsTableID = "tblCKDpubPux5jjwS";
 
 export const departmentsTable = await base(departmentsTableID)
   .select()
   .firstPage();
-console.log("API CALL");
-console.log(departmentsTable);
 
 export const departmentsList = departmentsTable.map((record) => {
   return {
