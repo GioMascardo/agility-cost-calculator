@@ -11,6 +11,9 @@
   import { createEventDispatcher, onDestroy } from "svelte";
   import { isWorkFromHome, selectedWorkOption, currentCurrency, estimateObjectArr, dashboardSummary } from '../../stores';
   import Counter from "../Counter.svelte";
+  import exchangeRates from "../helper/fetchExchangeRates";
+  console.log(exchangeRates);
+
   const dispatch = createEventDispatcher();
   
   const experienceLevelOptions = ['Junior', 'Intermediate', 'Senior'];
@@ -18,12 +21,12 @@
 
   $: roleData = entry.find(object => object.workOption === $selectedWorkOption)
   $: selectedRole = roleData.roles.find(role => role.experienceLevel === selectedExperienceLevel)
-  $: ({ role, currencies } = selectedRole);
+  $: ({ role, hireAgilityusd, hireOnshoreusd, yourSavingsusd } = selectedRole);
   let numberOfEmployees = 1;
-  $: currentCurrencyArr = currencies[`${$currentCurrency}`];
-  $: hireWithAgility = Math.floor(currentCurrencyArr[0] * numberOfEmployees);
-  $: hireOnshore = Math.floor(currentCurrencyArr[1] * numberOfEmployees);
-  $: yourSavings = Math.floor(currentCurrencyArr[2] * numberOfEmployees);
+  $: ({})
+  $: hireWithAgility = Math.floor((hireAgilityusd * exchangeRates[`${$currentCurrency}`]) * numberOfEmployees);
+  $: hireOnshore = Math.floor((hireOnshoreusd * exchangeRates[`${$currentCurrency}`]) * numberOfEmployees);
+  $: yourSavings = Math.floor((yourSavingsusd * exchangeRates[`${$currentCurrency}`]) * numberOfEmployees);
 
   $: selectedRowData = {
     id: id,
