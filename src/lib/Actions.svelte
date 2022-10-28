@@ -175,7 +175,6 @@
     }
 
     .add-role-action {
-      justify-content: center;
       flex-basis: max-content;
       flex-wrap: wrap;
     }
