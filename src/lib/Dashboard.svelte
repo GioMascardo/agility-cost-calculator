@@ -17,25 +17,45 @@
       <Tab class={!$isWorkFromHome ? 'tab selectedTab' : 'tab'} on:click={() => $isWorkFromHome = false}>Office</Tab>
     </TabList>
   </TabGroup>
-  <table>
-    <tr class="top-row">
-      <th><h3 class="text-align-left role">Role</h3></th>
-      <th><h3 class="text-align-center">Staff Required</h3></th>
-      <th><h3 class="text-align-center">Experience Level</h3></th>
-      <th><h3 class="text-align-right">Hire With Agility</h3></th>
-      <th><h3 class="text-align-right">Hire Onshore</h3></th>
-      <th><h3 class="text-align-right">Your Savings</h3></th>
-      <th></th>
-    </tr>
-    {#each entryList as entry (entry[2].id)}
-      <Row {entry} id={entry[2].id} on:delete />
-    {/each}
-  </table>
+  <div class="table-wrapper">
+    <table>
+      <tr class="top-row">
+        <th><h3 class="text-align-left role">Role</h3></th>
+        <th><h3 class="text-align-center">Staff Required</h3></th>
+        <th><h3 class="text-align-center">Experience Level</h3></th>
+        <th><h3 class="text-align-right">Hire With Agility</h3></th>
+        <th><h3 class="text-align-right">Hire Onshore</h3></th>
+        <th><h3 class="text-align-right">Your Savings</h3></th>
+        <th></th>
+      </tr>
+      {#each entryList as entry (entry[2].id)}
+        <Row {entry} id={entry[2].id} on:delete />
+      {/each}
+    </table>
+  </div>
 </div>
 
 <style>
   .dashboard {
     min-height: 20rem;
+  }
+
+  .table-wrapper {
+    min-height: 15rem;
+    overflow-x: scroll;
+  }
+
+  ::-webkit-scrollbar {
+    height: .5rem;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--neutral-clr-300);
+    border-radius: 1rem;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: var(--neutral-clr-100);
   }
   
   :global(.tabList) {

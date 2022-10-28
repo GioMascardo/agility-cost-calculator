@@ -168,4 +168,19 @@
   :global(.primary-button:hover) {
     background-color: var(--primary-clr-600);
   }
+
+  @media (max-width: 40rem) {
+    :global(.actions-wrapper) {
+      flex-wrap: wrap;
+    }
+
+    .add-role-action {
+      flex-basis: max-content;
+      flex-wrap: wrap;
+    }
+
+    :global(.menu-button) {
+      width: max-content;
+    }
+  }
 </style>

@@ -138,6 +138,7 @@ const base = new Airtable({
   main {
     max-width: 76rem;
     margin-inline: auto;
+    padding-inline: 2rem;
   }
 
   .container {

@@ -24,6 +24,13 @@
     align-items: center;
   }
 
+  @media (max-width: 40rem) {
+    .summary-section {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
   .estimate-wrapper {
     display: flex;
     gap: .5rem 2rem;
