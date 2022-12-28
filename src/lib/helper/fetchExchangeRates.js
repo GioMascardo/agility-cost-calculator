@@ -1,11 +1,10 @@
 const fetchExchangeRates = async () => {
   let apiResponse = await fetch(
     `https://api.freecurrencyapi.com/v1/latest?apikey=${
-      import.meta.env.CURRENCY_API_KEY
+      import.meta.env.VITE_CURRENCY_API_KEY
     }&currencies=CAD%2CAUD%2CGBP%2CSGD%2CNZD`
   );
-  console.log(apiResponse);
-  let data = await apiResponse.json();
+  let { data } = await apiResponse.json();
   let CADconversionRate = data.CAD;
   let AUDconversionRate = data.AUD;
   let GBPconversionRate = data.GBP;
