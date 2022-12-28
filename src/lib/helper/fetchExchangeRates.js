@@ -1,13 +1,16 @@
 const fetchExchangeRates = async () => {
   let apiResponse = await fetch(
-    "https://api.exchangerate.host/latest?base=USD"
+    `https://api.freecurrencyapi.com/v1/latest?apikey=${
+      import.meta.env.CURRENCY_API_KEY
+    }&currencies=CAD%2CAUD%2CGBP%2CSGD%2CNZD`
   );
+  console.log(apiResponse);
   let data = await apiResponse.json();
-  let CADconversionRate = data.rates.CAD;
-  let AUDconversionRate = data.rates.AUD;
-  let GBPconversionRate = data.rates.GBP;
-  let SGDconversionRate = data.rates.SGD;
-  let NZDconversionRate = data.rates.NZD;
+  let CADconversionRate = data.CAD;
+  let AUDconversionRate = data.AUD;
+  let GBPconversionRate = data.GBP;
+  let SGDconversionRate = data.SGD;
+  let NZDconversionRate = data.NZD;
 
   return {
     usd: 1,
